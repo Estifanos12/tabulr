@@ -51,14 +51,15 @@ export function ModeToggle() {
     <Button
       onClick={TOGGLE_THEME}
       variant="outline"
-      size="sm"
-      className="rounded size-7 md:size-8 p-0"
+      size="icon"
+
+      className="rounded"
     >
       <SunIcon
-        className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 size-3 md:size-4"
+        className="rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 size-5 md:size-4"
       />
       <MoonIcon
-        className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 size-3 md:size-4"
+        className="absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 size-5 md:size-4"
       />
       <span className="sr-only">Toggle theme</span>
     </Button>

@@ -1,5 +1,5 @@
-import { checkMemoryUsage } from "@/modules/memory";
-import { dbService } from "@/modules/db";
+import { checkMemoryUsage } from "@/services/memory";
+import { dbService } from "@/services/db";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 
