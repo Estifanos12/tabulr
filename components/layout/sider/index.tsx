@@ -8,16 +8,16 @@ import {
     SidebarGroup,
     SidebarHeader,
 } from "@/components/ui/sidebar"
-import { Button } from "../ui/button"
-import { Logo } from "../logo"
-import { ModeToggle } from "../theme/toggle-theme"
+import { Button } from "../../ui/button"
+import { Logo } from "../../logo"
+import { ModeToggle } from "../../theme/toggle-theme"
 
 import { SYSTEM_DB } from "@/constants"
 
 function renderContent() {
 
 }
-export function ListView() {
+export function Sider() {
     return (
         <Sidebar>
             <SidebarHeader className="bg-background flex items-center justify-center m-2 border rounded-lg">
