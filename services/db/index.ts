@@ -24,7 +24,7 @@ class DatabaseService {
             logger.success('Connected to MySQL server');
         } catch (error) {
             logger.error(`Failed to connect to MySQL server\n${error}`);
-            throw error;
+            throw new Error("Failed to connect to MySQL server");
         }
     }
   }
@@ -116,6 +116,34 @@ class DatabaseService {
       return [null, metadata];
     } catch (error) {
       return ["Error fetching database metadata", null];
+    }
+  }
+
+  public async getCountInfo(): Promise<[error: string | null, data: any]> {
+    try {
+      await this.ensureConnection();
+      // Get the number of databases, tables
+      const [databases] = await this.connection!.query("SHOW DATABASES;");
+      const [tables] = await this.connection!.query(`
+        SELECT TABLE_CATALOG AS DatabaseName,TABLE_SCHEMA AS SchemaName, TABLE_NAME AS TableName,TABLE_TYPE AS TableType FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' ORDER BY TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME;
+        `);
+      return [null, { databases: (databases as any[]).length, tables: (tables as any[]).length }];
+    } catch (error) {
+      console.error(error);
+      return ["Error fetching count information", null];
+    }
+  }
+  public async getServerInfo(): Promise<[error: string | null, data: any]> {
+    try {
+      await this.ensureConnection();
+      // Get Version
+      const [versionRows] = await this.connection!.query("SELECT VERSION() AS mysql_version");
+      const version = (versionRows as any[])[0]?.mysql_version || 'Unknown';
+
+      return [null, { version}];
+    } catch (error) {
+      console.error(error);
+      return ["Error fetching server information", null];
     }
   }
 
