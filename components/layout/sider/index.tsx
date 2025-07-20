@@ -1,31 +1,33 @@
 import Link from "next/link"
 import { Github } from "lucide-react"
 
+import { dbClient } from "@/drivers"
+
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
-    SidebarGroup,
     SidebarHeader,
+    SidebarGroupLabel
 } from "@/components/ui/sidebar"
+import RenderDB from "@/components/database/db-list"
 import { Button } from "../../ui/button"
 import { Logo } from "../../logo"
 import { ModeToggle } from "../../theme/toggle-theme"
 
-import { SYSTEM_DB } from "@/constants"
+export async function Sider() {
+    const [error, databases] = await dbClient.getDatabases()
 
-function renderContent() {
+    if (error) throw new Error(error)
 
-}
-export function Sider() {
     return (
         <Sidebar>
             <SidebarHeader className="bg-background flex items-center justify-center m-2 border rounded-lg">
                 <Logo />
             </SidebarHeader>
             <SidebarContent>
-                <SidebarGroup />
-                <SidebarGroup />
+                <SidebarGroupLabel>Databases</SidebarGroupLabel>
+                <RenderDB databases={databases} />
             </SidebarContent>
             <SidebarFooter className="bg-background flex items-center justify-center m-2 border rounded-lg">
             <div className="flex items-center gap-2">
