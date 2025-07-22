@@ -35,7 +35,7 @@ interface TableSchema {
  * Client class for MySQL server
  * @class Client
  * @constructor
- * @param {ClientConfig} config - Client configuration
+ * @param {ConnectionOptions} config - Client configuration
  */
 
 class Client {
