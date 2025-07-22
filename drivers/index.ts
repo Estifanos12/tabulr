@@ -7,10 +7,12 @@ export interface TableResult {
     table_name: string;
     table_schema: string;
     table_type: string;
+    table_collation: string;
 }
 
 interface TableMetadata extends TableResult {
     engine: string;
+    table_rows: number;
     table_comment: string;
     data_length: number;
     index_length: number;
@@ -46,6 +48,7 @@ class Client {
             supportBigNumbers: true, // Enable support for big numbers
             bigNumberStrings: true, // Enable support for big number strings
             dateStrings: true, // Enable support for date strings
+            multipleStatements: true, // Enable support for multiple statements - Batch queries
         };
     }
 
@@ -99,12 +102,12 @@ class Client {
     /**
      * Get the tables in a database
      * @param {string} database - Database name
-     * @returns {Promise<[error: string | null, data: TableResult[]]>}
+     * @returns {Promise<[error: string | null, tables: TableResult[]]>}
      */
-    async getTables(database: string): Promise<[error: string | null, data: TableResult[]]> {
+    async getTables(database: string): Promise<[error: string | null, tables: TableResult[]]> {
         try {
             await this.ensureConnection();
-            const query = formatQuery(`SELECT TABLE_NAME as table_name,TABLE_SCHEMA as table_schema,TABLE_TYPE as table_type FROM information_schema.tables WHERE TABLE_SCHEMA = ?`);
+            const query = formatQuery(`SELECT TABLE_NAME as table_name,TABLE_SCHEMA as table_schema,TABLE_TYPE as table_type,TABLE_COLLATION as table_collation FROM information_schema.tables WHERE TABLE_SCHEMA = ?`);
             const [rows] = await this.connection!.query(query, [database]);
             return [null, (rows as TableResult[])];
         } catch (error) {
@@ -121,7 +124,6 @@ class Client {
      */
     async getTableSchema(database: string, table: string): Promise<[error: string | null, data: TableSchema[]]> {
         try {
-            console.log(database, table)
             await this.ensureConnection();
             const query = formatQuery(`DESCRIBE \`${database}\`.\`${table}\`;`);
             const [rows] = await this.connection!.query(query);
@@ -177,6 +179,7 @@ class Client {
             await this.connection!.query(formatQuery(`USE \`${database}\`;`));
             const [rows] = await this.connection!.query(formatQuery(sql));
 
+            console.log(rows)
             return [null, rows as any[]];
         } catch (error) {
             logger.error(`Error running query\n${error}`);

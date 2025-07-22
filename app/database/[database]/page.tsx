@@ -1,5 +1,3 @@
-import { dbService } from "@/services/db"
-
 export default async function Database({ 
     params,
     searchParams

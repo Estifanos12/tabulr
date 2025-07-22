@@ -22,6 +22,7 @@ function RenderTable({ dbName }: { dbName: string }) {
 
     const tables = data?.tables.map(table => table.table_name)
 
+    console.log(data)
     const { displayedItems, hasMore, searchTerm, handleLoadMore, handleSearchChange, filteredCount } = useList({
         data: tables || [],
     })
@@ -101,7 +102,7 @@ export default function RenderDB({ databases }: { databases: string[] }) {
                                     <SidebarMenuItem>
                                         <CollapsibleTrigger asChild>
                                             <SidebarMenuButton isActive={activeDatabase === db} onClick={() => setActiveDatabase(db)}>
-                                                <Link href={`/database/${db}`} className="flex items-center gap-2 hover:underline">
+                                                <Link href={`/database/${db}/tables`} className="flex items-center gap-2 hover:underline">
                                                     <Database className="size-4" />
                                                     <span>{db}</span>
                                                 </Link>
