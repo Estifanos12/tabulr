@@ -1,3 +1,8 @@
+/**
+ * Export a SQL query to a file
+ * @param {string} query - The SQL query to export
+ */
+
 export const exportSqlQuery = (query: string) => {
     const blob = new Blob([query], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
