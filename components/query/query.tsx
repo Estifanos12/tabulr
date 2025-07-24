@@ -13,7 +13,7 @@ import {
     ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { logger } from "@/utils/log";
-import useLocalStorage from "@/hooks/useLocalstorage";
+import useLocalStorage from "@/hooks/use-localstorage";
 
 export default function Query() {
 

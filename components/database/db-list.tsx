@@ -2,27 +2,29 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import { useParams } from "next/navigation"
 import { Database, Table, CircleQuestionMark } from "lucide-react"
 
-import { useList } from "@/hooks/useList"
+import { useList } from "@/hooks/use-list"
 import { useActiveSidebarElement } from "@/hooks/use-active-sidebar-element"
-import { useFetch } from "@/hooks/useFetch"
+import { useFetch } from "@/hooks/use-fetch"
 
-import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuSub, SidebarMenuSubItem, useSidebar } from "../ui/sidebar"
+import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuSub, SidebarMenuSubItem, useSidebar, SidebarMenuSubButton } from "../ui/sidebar"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { Loader } from "../loader"
 
 import { DB_REFERENCE_URL } from "@/constants"
-import { type TableResult } from "@/drivers"
+import { type TableResult } from "@/db"
 
 function RenderTable({ dbName }: { dbName: string }) {
     const { data, error, loading } = useFetch<{ tables: TableResult[] }>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tables?dbName=${dbName}`)
 
     const tables = data?.tables.map(table => table.table_name)
+    const params = useParams()
 
-    console.log(data)
+
     const { displayedItems, hasMore, searchTerm, handleLoadMore, handleSearchChange, filteredCount } = useList({
         data: tables || [],
     })
@@ -47,12 +49,14 @@ function RenderTable({ dbName }: { dbName: string }) {
             </div>
             {displayedItems.map(table => (
                 <SidebarMenuSubItem key={table}>
-                    <Link href={`/database/${dbName}?table=${table}&tab=table`} className="hover:underline">
-                        <div className="flex items-center gap-2">
-                            <Table className="size-4" />
+                    <SidebarMenuSubButton isActive={params?.table === table}>
+                        <Link href={`/database/${dbName}/table/${table}`} className="hover:underline">
+                            <div className="flex items-center gap-2">
+                                <Table className="size-4" />
                             <span>{table}</span>
-                        </div>
-                    </Link>
+                            </div>
+                        </Link>
+                    </SidebarMenuSubButton>
                 </SidebarMenuSubItem>
             ))}
 

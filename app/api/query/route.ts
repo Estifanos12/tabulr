@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { dbClient } from "@/drivers";
+import { dbClient } from "@/db";
 
 export async function POST(request: NextRequest) {
     const { query, database } = await request.json();

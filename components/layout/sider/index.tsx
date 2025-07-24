@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Github } from "lucide-react"
 
-import { dbClient } from "@/drivers"
+import { dbClient } from "@/db"
 
 import {
     Sidebar,

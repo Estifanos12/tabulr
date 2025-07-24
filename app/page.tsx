@@ -1,6 +1,6 @@
 import React from "react";
 
-import { dbClient } from "@/drivers";
+import { dbClient } from "@/db";
 import QuickStart from "@/components/quick-start";
 import DBStats from "@/components/stats";
 

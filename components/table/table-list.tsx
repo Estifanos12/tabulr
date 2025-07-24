@@ -1,10 +1,10 @@
 'use client'
 
-import { type TableResult } from "@/drivers";
+import { type TableResult } from "@/db";
 import { Table, TableBody, TableHead, TableRow, TableCaption, TableHeader, TableCell, TableFooter } from "../ui/table";
 import { Button } from "../ui/button";
 
-import { useList } from "@/hooks/useList";
+import { useList } from "@/hooks/use-list";
 import Link from "next/link";
 
 export default function TableList({ tables }: { tables: TableResult[] }) {
@@ -30,7 +30,7 @@ export default function TableList({ tables }: { tables: TableResult[] }) {
                         displayedItems.map((table) => (
                             <TableRow key={table.table_name}>
                                 <TableCell className="font-medium">
-                                    <Link href={`/database/${table.table_schema}?table=${table.table_name}`} className="hover:underline">
+                                    <Link href={`/database/${table.table_schema}/table/${table.table_name}`} className="hover:underline">
                                         {table.table_name}
                                     </Link>
                                 </TableCell>

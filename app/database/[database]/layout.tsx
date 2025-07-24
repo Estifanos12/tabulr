@@ -5,7 +5,7 @@ export default async function DatabaseLayout({ children, params }: { children: R
 
   return (
     <>
-      <h2 className="text-xl font-semibold mb-5">Exploring {database}</h2>
+      <h2 className="text-xl font-semibold mb-5">Exploring <span className="text-primary">{database}</span></h2>
       <DatabaseTabs database={database} />
       <div className="py-10 h-full">
           { children }

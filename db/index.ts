@@ -22,7 +22,7 @@ interface TableMetadata extends TableResult {
     update_time?: Date;
 }
 
-interface TableSchema {
+export interface TableSchema {
     Field: string;
     Type: string;
     Null: string;
@@ -127,11 +127,33 @@ class Client {
             await this.ensureConnection();
             const query = formatQuery(`DESCRIBE \`${database}\`.\`${table}\`;`);
             const [rows] = await this.connection!.query(query);
-            console.log(rows)
             return [null, (rows as TableSchema[])];
         } catch (error) {
             logger.error(`Error fetching table schema\n${error}`);
             return ["Error fetching table schema", []];
+        }
+    }
+
+    /**
+     * Get the data of a table
+     * @param {string} database - Database name
+     * @param {string} table - Table name
+     * @returns {Promise<[error: string | null, data: { schema: TableSchema[], rows: any[] }]>}
+     */
+    async getTableData(database: string, table: string): Promise<[error: string | null, data: { schema: TableSchema[], rows: any[] }]> {
+        try {
+                await this.ensureConnection();
+            const [_, schema] = await this.getTableSchema(database, table)
+            const query = formatQuery(`SELECT * FROM \`${database}\`.\`${table}\`;`);
+            const [rows] = await this.connection!.query(query);
+            const data = {
+                schema,
+                rows: rows as any[]
+            }
+            return [null, data];
+        } catch (error) {
+            logger.error(`Error fetching table data\n${error}`);
+            return ["Error fetching table data", { schema: [], rows: [] }];
         }
     }
 

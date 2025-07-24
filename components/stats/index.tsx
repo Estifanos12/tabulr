@@ -1,8 +1,8 @@
 import { Database, Table } from "lucide-react";
 
 import { Card, CardDescription, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { checkMemoryUsage } from "@/drivers/memory";
-import { dbClient } from "@/drivers";
+import { checkMemoryUsage } from "@/db/memory";
+import { dbClient } from "@/db";
 
 function StatsCard({ title, description , Icon, value }: { title: string, description: string, Icon: React.ElementType, value: string }) { 
     return (

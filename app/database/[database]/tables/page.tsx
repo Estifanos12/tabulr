@@ -1,4 +1,4 @@
-import { dbClient } from "@/drivers"
+import { dbClient } from "@/db"
 import TableList from "@/components/table/table-list"
 export default async function Tables({ params }: { params: Promise<{ database: string }> }) {
     

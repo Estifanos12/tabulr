@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CodeXml, Database, Info, Network, TableIcon } from "lucide-react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CodeXml, Database, Info, SquareDashedMousePointer, TableIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TabsLinkTrigger: React.FC<{ href: string; children: React.ReactNode; className?: string }> = ({
@@ -37,7 +37,7 @@ export default function DatabaseTabs({ database }: { database: string }) {
 				</TabsLinkTrigger>
 				<TabsLinkTrigger href={`/database/${database}/schema`}>
 					<div className="flex items-center gap-2">
-						<SquareDashedMousePointer className="size-4" />
+						<Network className="size-4" />
 						Schema
 					</div>
 				</TabsLinkTrigger>
