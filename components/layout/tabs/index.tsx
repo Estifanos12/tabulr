@@ -21,8 +21,8 @@ export default function DatabaseTabs({ database }: { database: string }) {
 	const path = usePathname();
 
 	return (
-		<Tabs defaultValue={path} className="w-full">
-			<TabsList className="w-full p-0 bg-background justify-start border-b rounded-none">
+		<Tabs defaultValue={path} className="max-w-4xl border rounded-md p-2">
+			<TabsList className="w-full p-0 bg-background justify-start rounded-none">
 				<TabsLinkTrigger href={`/database/${database}/tables/`}>
                     <div className="flex items-center gap-2 ">
                         <TableIcon className="size-4" />

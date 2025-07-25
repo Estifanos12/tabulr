@@ -51,7 +51,7 @@ export default function EachTable({ schema, rows }: TableProps) {
     const columns = useMemo<ColumnDef<TableSchema>[]>(() => {
         return [
             ...formattedSchema.map((column) => ({
-                header: () => <div className="font-bold">{column.name}</div>,
+                header: () => <div className="font-bold">{column.name} <span className="text-xs text-muted-foreground italic">{column.type}</span></div>,
                 accessorKey: column.name,
                 cell: ({ row }) => {
                     const value = row.getValue(column.name)
@@ -101,50 +101,50 @@ export default function EachTable({ schema, rows }: TableProps) {
         data: rows,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
-      })
+    })
 
     return (
         <div className="rounded-md border max-w-7xl">
             <Table>
                 <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                        return (
-                        <TableHead key={header.id}>
-                            {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                                )}
-                        </TableHead>
-                        )
-                    })}
-                    </TableRow>
-                ))}
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => {
+                                return (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
+                                )
+                            })}
+                        </TableRow>
+                    ))}
                 </TableHeader>
                 <TableBody>
-                {table.getRowModel().rows?.length ? (
-                    table.getRowModel().rows.map((row) => (
-                    <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                    >
-                        {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </TableCell>
-                        ))}
-                    </TableRow>
-                    ))
-                ) : (
-                    <TableRow>
-                    <TableCell colSpan={columns.length} className="h-24 text-center">
-                        No results.
-                    </TableCell>
-                    </TableRow>
-                )}
+                    {table.getRowModel().rows?.length ? (
+                        table.getRowModel().rows.map((row) => (
+                            <TableRow
+                                key={row.id}
+                                data-state={row.getIsSelected() && "selected"}
+                            >
+                                {row.getVisibleCells().map((cell) => (
+                                    <TableCell key={cell.id}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                                No results.
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
             <div className="flex items-center justify-end space-x-2 p-4">
@@ -153,7 +153,7 @@ export default function EachTable({ schema, rows }: TableProps) {
                     size="sm"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
-                    >
+                >
                     Previous
                 </Button>
                 <Button
@@ -161,7 +161,7 @@ export default function EachTable({ schema, rows }: TableProps) {
                     size="sm"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
-                    >
+                >
                     Next
                 </Button>
                 <Button
@@ -174,6 +174,6 @@ export default function EachTable({ schema, rows }: TableProps) {
             <div className="p-4">
                 <p className="text-sm text-muted-foreground">Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount() ? table.getPageCount() : 1}</p>
             </div>
-         </div>
+        </div>
     )
 }
