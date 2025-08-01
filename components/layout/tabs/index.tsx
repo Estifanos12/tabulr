@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CodeXml, Database, Info, Network, TableIcon } from "lucide-react";
@@ -12,16 +13,17 @@ const TabsLinkTrigger: React.FC<{ href: string; children: React.ReactNode; class
 	children,
 	className,
 }) => (
-	<TabsTrigger value={href} className={cn(className, "rounded-none bg-background h-full data-[state=active]:shadow-none border border-transparent border-b-border data-[state=active]:border-border data-[state=active]:border-b-background -mb-[2px] rounded-t")} asChild>
+	<TabsTrigger value={href.split("/").pop() || ""} className={cn(className, "rounded-none bg-background h-full data-[state=active]:shadow-none border border-transparent border-b-border data-[state=active]:border-border data-[state=active]:border-b-background -mb-[2px] rounded-t")} asChild>
 		<Link href={href}>{children}</Link>
 	</TabsTrigger>
 );
 
 export default function DatabaseTabs({ database }: { database: string }) {
 	const path = usePathname();
+	const activeTab = path.split("/").pop() || "tables";
 
 	return (
-		<Tabs defaultValue={path} className="max-w-4xl border rounded-md p-2">
+		<Tabs defaultValue={activeTab} className="max-w-4xl border rounded-md p-2">
 			<TabsList className="w-full p-0 bg-background justify-start rounded-none">
 				<TabsLinkTrigger href={`/database/${database}/tables/`}>
                     <div className="flex items-center gap-2 ">
