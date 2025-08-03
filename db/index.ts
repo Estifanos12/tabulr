@@ -1,35 +1,9 @@
 import mysql, { Connection, ConnectionOptions } from 'mysql2/promise'
 
+
 import { logger } from '@/utils/log';
 import { formatQuery } from '@/utils/sql-formatter'
-
-export interface TableResult {
-    table_name: string;
-    table_schema: string;
-    table_type: string;
-    table_collation: string;
-}
-
-interface TableMetadata extends TableResult {
-    engine: string;
-    table_rows: number;
-    table_comment: string;
-    data_length: number;
-    index_length: number;
-    data_free: number;
-    auto_increment?: number;
-    create_time?: Date;
-    update_time?: Date;
-}
-
-export interface TableSchema {
-    Field: string;
-    Type: string;
-    Null: string;
-    Key: string;
-    Default: string;
-    Extra?: string;
-}
+import { TableResult, TableSchema, TableType } from '@/types';
 
 /**
  * Client class for MySQL server
@@ -142,7 +116,7 @@ class Client {
      */
     async getTableData(database: string, table: string): Promise<[error: string | null, data: { schema: TableSchema[], rows: any[] }]> {
         try {
-                await this.ensureConnection();
+            await this.ensureConnection();
             const [_, schema] = await this.getTableSchema(database, table)
             const query = formatQuery(`SELECT * FROM \`${database}\`.\`${table}\`;`);
             const [rows] = await this.connection!.query(query);
@@ -189,6 +163,33 @@ class Client {
     }
 
     /**
+     * Check if the user has permissions to alter the table
+     * @param {string} database - Database name
+     * @param {string} table - Table name
+     * @returns {Promise<[error: string | null, data: TableType | {}]>}
+     */
+    async checkTableType(database: string, table: string): Promise<[error: string | null, data: TableType | {}]> {
+        try {
+            await this.ensureConnection();
+            const query = formatQuery(
+                `
+                SELECT 
+                    table_name as table_name, 
+                    table_type as table_type
+                FROM information_schema.tables
+                    WHERE table_schema = ?
+                    AND table_name = ?;
+                `
+            )
+            const [rows] = await this.connection!.query(query, [database, table]);
+
+            return [null, (rows as TableType[])[0] || {}];
+        } catch (error) {
+            logger.error(`Error checking user permissions\n${error}`);
+            return ["Error checking user permissions", {}];
+        }
+    }
+    /**
      * Run a user query on the MySQL server
      * @param {string} sql - SQL query
      * @param {string} database - Database name
@@ -200,7 +201,6 @@ class Client {
 
             await this.connection!.query(formatQuery(`USE \`${database}\`;`));
             const [rows] = await this.connection!.query(formatQuery(sql));
-
             console.log(rows)
             return [null, rows as any[]];
         } catch (error) {

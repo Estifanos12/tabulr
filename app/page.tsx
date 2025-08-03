@@ -8,7 +8,7 @@ export default async function Home() {
   const isRunning = await dbClient.isRunning();
 
   if (!isRunning) throw new Error("MySQL server is not running");
-  
+
   return (
       <React.Fragment>
         <div className="flex flex-col gap-4">

@@ -49,14 +49,14 @@ function RenderTable({ dbName }: { dbName: string }) {
             </div>
             {displayedItems.map(table => (
                 <SidebarMenuSubItem key={table}>
-                    <SidebarMenuSubButton isActive={params?.table === table}>
-                        <Link href={`/database/${dbName}/table/${table}`} className="hover:underline">
+                    <Link href={`/database/${dbName}/table/${table}`} className="hover:underline">
+                        <SidebarMenuSubButton isActive={params?.table === table}>
                             <div className="flex items-center gap-2">
                                 <Table className="size-4" />
-                            <span>{table}</span>
+                                <span>{table}</span>
                             </div>
-                        </Link>
-                    </SidebarMenuSubButton>
+                        </SidebarMenuSubButton>
+                    </Link>
                 </SidebarMenuSubItem>
             ))}
 
@@ -116,7 +116,7 @@ export default function RenderDB({ databases }: { databases: string[] }) {
                                                             onClick={(e) => {
                                                                 e.stopPropagation()
                                                             }}
-                                                        target="_blank" className="ml-auto">
+                                                            target="_blank" className="ml-auto">
                                                             <CircleQuestionMark className="size-3" />
                                                         </Link>
                                                     )

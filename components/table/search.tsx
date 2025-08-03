@@ -103,7 +103,7 @@ export default function TableSearch({ schema, database, table }: TableSearchProp
             </div>
 
             <div className="flex-1 border rounded-md p-4 flex flex-col gap-4">
-                <h3 className="text-lg font-bold">Show Query</h3>
+                <h3 className="text-lg font-bold">Query Output</h3>
                 <div>
                     <CodeMirror
                         extensions={[sql()]}
