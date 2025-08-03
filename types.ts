@@ -57,3 +57,9 @@ export interface Constraint {
     value: string;
     description: string;
 }
+
+export interface Operator {
+    name: string;
+    description: string;
+    symbol: string;
+}

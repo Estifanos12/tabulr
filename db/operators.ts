@@ -1,8 +1,4 @@
-interface Operator {
-    name: string;
-    description: string;
-    symbol: string;
-}
+import { Operator } from "@/types";
 
 export const operators: Operator[] = [
     {
