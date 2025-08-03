@@ -1,5 +1,11 @@
 import { Constraint } from "@/types";
 
+/**
+ * List of constraints for MySQL.
+ * 
+ * @see https://www.w3schools.com/mysql/mysql_constraints.asp
+ */
+
 export const constraints: Constraint[] = [
     {
         name: "Primary Key",

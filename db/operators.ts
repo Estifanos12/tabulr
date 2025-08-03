@@ -1,5 +1,11 @@
 import { Operator } from "@/types";
 
+/**
+ * List of operators for MySQL.
+ * 
+ * @see https://dev.mysql.com/doc/refman/8.4/en/comparison-operators.html
+ */
+
 export const operators: Operator[] = [
     {
         name: "equal",

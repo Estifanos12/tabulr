@@ -1,5 +1,11 @@
 import { MySQLDataType } from "@/types";
 
+/**
+ * List of data types for MySQL.
+ * 
+ * @see https://dev.mysql.com/doc/refman/8.4/en/data-types.html
+ */
+
 export const dataTypes: MySQLDataType[] = [{
     type: "Integer",
     suggestions: [
