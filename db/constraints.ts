@@ -3,7 +3,7 @@ import { Constraint } from "@/types";
 /**
  * List of constraints for MySQL.
  * 
- * @see https://www.w3schools.com/mysql/mysql_constraints.asp
+ * @see https://dev.mysql.com/doc/refman/8.4/en/create-table.html
  */
 
 export const constraints: Constraint[] = [
