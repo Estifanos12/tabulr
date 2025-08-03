@@ -1,3 +1,9 @@
+/**
+ * List of collations for MySQL.
+ * 
+ * @see https://dev.mysql.com/doc/refman/8.4/en/charset-collation-implementations.html
+ */
+
 export const MYSQL_COLLATION_LIST = [
     "armscii8_bin",
     "armscii8_general_ci",
