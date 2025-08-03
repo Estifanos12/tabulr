@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { toast } from 'sonner'
 
+import { logger } from '@/utils/log'
 type CopiedValue = string | null
 
 type CopyFn = (text: string) => Promise<boolean>
@@ -14,7 +15,7 @@ export function useCopyToClipboard({ message = "Copied to clipboard" }: CopyToCl
 
   const copy: CopyFn = useCallback(async text => {
     if (!navigator?.clipboard) {
-      console.warn('Clipboard not supported')
+      logger.info('Clipboard not supported')
       return false
     }
 
@@ -25,7 +26,7 @@ export function useCopyToClipboard({ message = "Copied to clipboard" }: CopyToCl
       toast.success(message)
       return true
     } catch (error) {
-      console.warn('Copy failed', error)
+      logger.error('Copy failed ' + error)
       setCopiedText(null)
       return false
     }
